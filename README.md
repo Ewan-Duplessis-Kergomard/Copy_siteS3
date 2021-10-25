@@ -1,4 +1,4 @@
-Détails de la base de données:
+**Détails de la base de données:**
 1. Clients
 - mail (primary key) VARCHAR64
 - mdp VARCHAR64 
