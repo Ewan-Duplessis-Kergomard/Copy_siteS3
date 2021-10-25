@@ -12,7 +12,7 @@ class Conf {
         'login' => 'duplessise',
         // A l'IUT, c'est votre mdp (INE par defaut)
         // Sur votre machine personelle, vous avez creez ce mdp a l'installation
-        'password' => 'x'
+        'password' => '060970483DB'
     );
 
     static public function getLogin() {
