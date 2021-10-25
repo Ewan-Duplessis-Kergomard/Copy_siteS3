@@ -20,3 +20,8 @@
 4. p_comm_clients
 - id_comm *(primary key) (foreigne key) INT*
 - mail_client *(foreign key) VARCHAR64*
+
+
+**Structure de la base:**
+- p_clients.mail=p_comm_clients.mail_clients 
+- p_produits.id_prod=p_commandes.id_prod
