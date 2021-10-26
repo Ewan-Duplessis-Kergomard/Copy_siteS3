@@ -17,7 +17,7 @@ class ModelClients {
     private $code_poste;
     private $rue;
 
-    public function __construct($mail, $mdp, $nom, $prenom, $ville, $code_poste, $rue)
+    public function __construct($mail, $mdp=NULL, $nom, $prenom, $ville, $code_poste, $rue)
     {
         $this->mail = $mail;
         $this->mdp = $mdp;

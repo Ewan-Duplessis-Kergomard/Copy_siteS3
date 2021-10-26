@@ -45,21 +45,32 @@ class ControllerClients {
 
     public static function deleted(){
         ModelClients::deleteByMail($_GET['mail']);
-        echo 'Client '.$_GET['mail'].' supprime.<br>';
+        echo 'Client '.$_GET['mail'].' supprimé.<br>';
     }
-    /*
-    public static function update(){
-        $controller = 'voiture';
-        $view='update';
-        $pagetitle='MiseAJour';
-        $v=ModelVoiture::getVoitureByImmat($_GET['immat']);
+
+    public static function updateInfo(){
+        $controller = 'clients';
+        $view = 'updateInfo';
+        $pagetitle = 'Modifications';
+        $c = ModelClients::getClientByMail($_GET['mail']);
         require File::build_path(array("view","view.php"));
     }
+
+    public static function updateMDP(){
+        $controller = 'clients';
+        $view = 'updateMDP';
+        $pagetitle = 'Changement mot de passe';
+        $c = ModelClients::getClientByMail($_GET['mail']);
+        require File::build_path(array("view","view.php"));
+    }
+
     public static function updated(){
-        echo 'Voiture '.$_GET['immat'].' mise à jour.<br>';
-        $v=new ModelVoiture($_GET['marque'],$_GET['couleur'],$_GET['immat']);;
-        $v->updateVoiture();
-        ControllerVoiture::read();
-    }*/
+        echo 'Vos informations ont été mises à jour:<br>';//Email: '.$_GET['mail'].'<br>Nom: '.$_GET['nom'].' '.$_GET['prenom'].'<br>Adresse: '.$_GET['rue'].' '.$_GET['code'].' '.$_GET['ville'].'<br>';
+        $c = new ModelClients($_GET['mail'],NULL,$_GET['nom'],$_GET['prenom'],$_GET['ville'],$_GET['code'],$_GET['rue']);
+        $c->updateInfoClient();
+        ControllerClients::read();
+    }
+    //TODO
+    //public static function updatedMDP
 }
 ?>
