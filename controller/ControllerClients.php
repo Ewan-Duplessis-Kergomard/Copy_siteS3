@@ -5,7 +5,7 @@ class ControllerClients {
     public static function readAll(){
         $tab_c = ModelClients::getAllClients();
         $controller = 'clients';
-        $view = 'list';
+        $view = 'readAll';
         $pagetitle = 'Liste Clients';
         require File::build_path(array("view","view.php"));
     }
@@ -18,8 +18,8 @@ class ControllerClients {
             $pagetitle='Erreur';
             require File::build_path(array("view","view.php"));}
         else
-            $view='detail';
-            $pagetitle='Details';
+            $view='read';
+            $pagetitle='Profil Client';
             require File::build_path(array("view","view.php"));
     }
     //Inscription
