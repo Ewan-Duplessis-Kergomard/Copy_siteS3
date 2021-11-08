@@ -95,7 +95,7 @@ class ModelProduits {
         $req_prep->execute($values);
     }
 
-    public function getProduitsById($id_prod){
+    public function getProduitById($id_prod){
         $sql = "SELECT * FROM p_produits WHERE id_prod=:id_prod";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("id_prod"=>$id_prod);
@@ -106,6 +106,19 @@ class ModelProduits {
         return $tab_produits[0];
     }
 
+    public function updateInfoProduit(){
+        $sql = "UPDATE p_produits SET nom_prod=:nom_prod,stock=:stock,prix=:prix,description=:description WHERE id_prod=:id_prod";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("id_prod"=>$this->id_prod,"nom_prod"=>$this->nom_prod,"stock"=>$this->stock,"prix"=>$this->prix,"description"=>$this->description);
+        $req_prep->execute($values);
+    }
+
+    public static function deleteById($id_prod){
+        $sql = "DELETE FROM p_produits WHERE id_prod=:id_prod";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("id_prod"=>$id_prod);
+        $req_prep->execute($values);
+    }
 
 
 }
