@@ -1,8 +1,10 @@
         <?php
-        require_once '/home/ann2/duplessise/public_html/projet_pCommhp/php-projet-s3/lib/File.php';
+      /*  require_once '/home/ann2/duplessise/public_html/projet_php/php-projet-s3/lib/File.php';*/
+        require_once File::build_path(array("controller","ControllerClients.php"));
+        require_once File::build_path(array("controller","ControllerCommandes.php"));
         // On recupère l'action passée dans l'URL
          if (!isset($_GET['controller'])) {
-            $controller = '';//TODO
+            $controller = 'commandes';
              } else $controller = $_GET['controller'];
          if (!isset($_GET['action'])) {
             $action = 'readAll';
