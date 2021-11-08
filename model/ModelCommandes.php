@@ -1,151 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr_FR">
 <head>
     <meta charset="utf-8" />
-    <title>Clients</title>
+    <title>Commandes</title>
 </head>
 <body>
 <?php
 require_once File::build_path(array("model","Model.php"));
 class ModelClients {
 
-    private $mail;
-    private $mdp;
-    private $nom;
-    private $prenom;
-    private $ville;
-    private $code_poste;
-    private $rue;
+    private $id_comm;
+    private $id_prod;
+    private $quantité;
 
-    public function __construct($mail, $mdp=NULL, $nom, $prenom, $ville, $code_poste, $rue)
+    public function __construct($id_comm, $id_prod, $quantité)
     {
-        $this->mail = $mail;
-        $this->mdp = $mdp;
-        $this->nom = $nom;
-        $this->prenom = $prenom;
-        $this->ville = $ville;
-        $this->code_poste = $code_poste;
-        $this->rue = $rue;
+        $this->id_comm = $id_comm;
+        $this->id_prod = $id_prod;
+        $this->quantité = $quantité;
     }
 
-    public static function getAllClients(){
+    public static function getAllCommandes(){
         $pdo = Model::$pdo;
-        $rep = $pdo->query('SELECT * FROM p_clients');
-        $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelClients');
-        $tab_clients = $rep->fetchAll();
-        return $tab_clients;
+        $rep = $pdo->query('SELECT * FROM p_commandes');
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelCommandes');
+        $tab_commandes = $rep->fetchAll();
+        return $tab_commandes;
     }
 
-    public function getMail()
+    public function getIdComm()
     {
-        return $this->mail;
+        return $this->id_comm;
     }
 
-    public function getMdp()
+    public function setIdComm($id_comm)
     {
-        return $this->mdp;
+        $this->id_comm = $id_comm;
     }
 
-    public function setMdp($mdp)
+    public function getIdProd()
     {
-        $this->mdp = $mdp;
+        return $this->id_prod;
     }
 
-    public function getNom()
+    public function setIdProd($id_prod)
     {
-        return $this->nom;
+        $this->id_prod = $id_prod;
     }
 
-    public function setNom($nom)
+    public function getQuantite()
     {
-        $this->nom = $nom;
+        return $this->quantité;
     }
 
-    public function getPrenom()
+    public function setQuantite($quantité)
     {
-        return $this->prenom;
+        $this->quantité = $quantité;
     }
 
-    public function setPrenom($prenom)
-    {
-        $this->prenom = $prenom;
-    }
-
-    public function getVille()
-    {
-        return $this->ville;
-    }
-
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-    }
-
-    public function getCodePoste()
-    {
-        return $this->code_poste;
-    }
-
-    public function setCodePoste($code_poste)
-    {
-        $this->code_poste = $code_poste;
-    }
-
-    public function getRue()
-    {
-        return $this->rue;
-    }
-
-    public function setRue($rue)
-    {
-        $this->rue = $rue;
-    }
-
-    public function afficher(){
-        echo "Client $this->prenom $this->nom, mail: $this->mail, adresse: $this->rue $this->code_poste $this->ville";
-    }
-
-    public static function getClientByMail($mail){
-        $sql = "SELECT * FROM p_clients WHERE mail=:mail";
+    public static function getCommandesByid($id_comm){
+        $sql = "SELECT * FROM p_commandes WHERE id_comm=:id_comm";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$mail);
+        $values = array("id_comm"=>$id_comm);
         $req_prep->execute($values);
-        $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelClients');
-        $tab_clients = $req_prep->fetchAll();
-        if(empty($tab_clients))return false;
-        return $tab_clients[0];
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelCommandes');
+        $tab_commandes = $req_prep->fetchAll();
+        if(empty($tab_commandes))return false;
+        return $tab_commandes[0];
     }
 
     public function save(){
-        $sql = "INSERT INTO p_clients (mail,mdp,nom,prenom,ville,code_poste,rue) VALUES (:mail,:mdp,:nom,:prenom,:ville,:code_poste,:rue)";
+        $sql = "INSERT INTO p_commandes (id_comm,id_prod,quantité) VALUES (:id_comm,:id_prod,:quantité)";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code-poste"=>$this->code_poste,"rue"=>$this->rue);
+        $values = array("id_comm"=>$this->id_comm,"id_prod"=>$this->id_prod,"quantité"=>$this->quantité);
         $req_prep->execute($values);
     }
 
-    public static function deleteByMail($mail){
-        $sql = "DELETE FROM p_clients WHERE mail=:mail";
+    public static function deleteAllByID($id_comm){
+        $sql = "DELETE FROM p_commandes WHERE id_comm=:id_comm";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$mail);
+        $values = array("id_comm"=>$id_comm);
         $req_prep->execute($values);
     }
-    //update sans mdp
-    public function updateInfoClient(){
-        $sql = "UPDATE p_clients SET nom=:nom,prenom=:prenom,ville=:ville,code_poste=:code_poste,rue=:rue WHERE mail=:mail";
+    public static function deleteByID($id_comm,$id_prod){
+        $sql = "DELETE FROM p_commandes WHERE id_comm=:id_comm AND id_prod=:id_prod";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code-poste"=>$this->code_poste,"rue"=>$this->rue);
+        $values = array("id_comm"=>$id_comm,"id_prod"=>$id_prod);
         $req_prep->execute($values);
     }
-
-    //TODO
-    //complete w/ hash
-    /*public function updateMDPClient(){
-        $sql = "UPDATE p_clients SET mdp=:mdp WHERE mail=:mail";
+    public function updateCommandes(){
+        $sql = "UPDATE p_commandes SET quantité=:quantité WHERE id_comm=:id_comm AND id_prod=:id_prod";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp);
-    }*/
+        $values = array("id_comm"=>$this->id_comm,"id_prod"=>$this->id_prod,"quantité"=>$this->quantité);
+        $req_prep->execute($values);
 }
-
+}
 ?>
 
 </body>
