@@ -1,6 +1,6 @@
 <?php
 require_once File::build_path(array("model","ModelClients.php")); // chargement du modèle
-class ControllerClients {
+class ControllerCommandes {
 
     public static function readAll(){
         $tab_c = ModelClients::getAllClients();
