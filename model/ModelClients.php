@@ -19,13 +19,15 @@ class ModelClients {
 
     public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL)
     {
-        $this->mail = $mail;
-        $this->mdp = $mdp;
-        $this->nom = $nom;
-        $this->prenom = $prenom;
-        $this->ville = $ville;
-        $this->code_poste = $code_poste;
-        $this->rue = $rue;
+        if(!is_null($mail)&&!is_null($nom)&&!is_null($prenom)&&!is_null($ville)&&!is_null($code_poste)&&!is_null($rue)) {
+            $this->mail = $mail;
+            $this->nom = $nom;
+            $this->prenom = $prenom;
+            $this->ville = $ville;
+            $this->code_poste = $code_poste;
+            $this->rue = $rue;
+        }
+        if(!is_null($mdp)){$this->mdp = $mdp;}
     }
 
     public static function getAllClients(){
@@ -133,7 +135,8 @@ class ModelClients {
     public function updateInfoClient(){
         $sql = "UPDATE p_clients SET nom=:nom,prenom=:prenom,ville=:ville,code_poste=:code_poste,rue=:rue WHERE mail=:mail";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code-poste"=>$this->code_poste,"rue"=>$this->rue);
+        $values = array("mail"=>htmlspecialchars($this->mail),"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code_poste"=>$this->code_poste,"rue"=>$this->rue);
+        var_dump($values);
         $req_prep->execute($values);
     }
 
