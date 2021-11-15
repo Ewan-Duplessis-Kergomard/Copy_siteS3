@@ -11,7 +11,7 @@ class ControllerCommandes {
     }
 
     public static function read(){
-        $c = ModelCommandes::getCommandesByid($_GET['id_comm']);
+        $c = ModelCommandes::getCommandesByid($_GET['id_comm']) ;
         $controller = 'commandes';
         if($c==false){
             $view='error';
@@ -22,7 +22,7 @@ class ControllerCommandes {
             $pagetitle='Votre commande';
             require File::build_path(array("view","view.php"));
     }
-    //Inscription
+
     public static function create(){
         $controller = 'commandes';
         $view='create';
@@ -65,9 +65,9 @@ class ControllerCommandes {
     }
 
     public static function updated(){
-        echo 'Votre commande a été mise à jour:<br>';//Email: '.$_GET['mail'].'<br>Nom: '.$_GET['nom'].' '.$_GET['prenom'].'<br>Adresse: '.$_GET['rue'].' '.$_GET['code'].' '.$_GET['ville'].'<br>';
         $c = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
         $c->update();
+        echo 'Votre commande a été mise à jour:<br>';
         ControllerCommandes::read();
     }
 }
