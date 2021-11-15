@@ -13,11 +13,13 @@ class ModelClients {
     private $id_prod;
     private $quantité;
 
-    public function __construct($id_comm, $id_prod, $quantité)
+    public function __construct($id_comm=NULL, $id_prod=NULL, $quantité=NULL)
     {
-        $this->id_comm = $id_comm;
-        $this->id_prod = $id_prod;
-        $this->quantité = $quantité;
+        if (!is_null($id_comm)&&!is_null($id_prod)&&!is_null($quantité)) {
+            $this->id_comm = $id_comm;
+            $this->id_prod = $id_prod;
+            $this->quantité = $quantité;
+        }
     }
 
     public static function getAllCommandes(){
