@@ -1,76 +1,74 @@
 <?php
-require_once File::build_path(array("model","ModelClients.php")); // chargement du modèle
+require_once File::build_path(array("model","ModelCommandes.php")); // chargement du modèle
 class ControllerCommandes {
 
     public static function readAll(){
-        $tab_c = ModelClients::getAllClients();
-        $controller = 'clients';
-        $view = 'list';
-        $pagetitle = 'Liste Clients';
+        $tab_c = ModelCommandes::getAllCommandes();
+        $controller = 'commandes';
+        $view = 'readAll';
+        $pagetitle = 'Vos commandes';
         require File::build_path(array("view","view.php"));
     }
 
     public static function read(){
-        $c = ModelClients::getClientByMail($_GET['mail']);
-        $controller = 'clients';
+        $c = ModelCommandes::getCommandesByid($_GET['id_comm']);
+        $controller = 'commandes';
         if($c==false){
             $view='error';
             $pagetitle='Erreur';
             require File::build_path(array("view","view.php"));}
         else
-            $view='detail';
-            $pagetitle='Details';
+            $view='read';
+            $pagetitle='Votre commande';
             require File::build_path(array("view","view.php"));
     }
     //Inscription
     public static function create(){
-        $controller = 'clients';
+        $controller = 'commandes';
         $view='create';
-        $pagetitle='Inscription';
+        $pagetitle='Achat';
         require File::build_path(array("view","view.php"));
     }
 
     public static function created(){
-        $client = new ModelClients($_GET['mail'],$_GET['mdp'],$_GET['nom'],$_GET['prenom'],$_GET['ville'],$_GET['code'],$_GET['rue']);
-        $client->save();
-        //afficher msg confirmation
+        $commandes = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
+        $commandes->save();
+        //afficher confirmation de commandes
+    }
+
+    public static function deleteAllByID(){
+        $controller = 'commandes';
+        $view = 'deleteAll';
+        $pagetitle = 'Suppression de toutes les commandes';
+        $c = ModelCommandes::deleteAllByID($_GET['id_comm']);
+        require File::build_path(array("view","view.php"));
     }
 
     public static function delete(){
-        $controller = 'clients';
+        $controller = 'commandes';
         $view = 'delete';
-        $pagetitle = 'Suppression';
+        $pagetitle = 'Suppression de commandes';
         require File::build_path(array("view","view.php"));
     }
 
     public static function deleted(){
-        ModelClients::deleteByMail($_GET['mail']);
-        echo 'Client '.$_GET['mail'].' supprimé.<br>';
+        ModelClients::deleteByID($_GET['id_comm'],$_GET['id_prod']);
+        echo 'Commandes numéro'.$_GET['id_comm'].$_GET['id_prod'].' supprimé.<br>';
     }
 
-    public static function updateInfo(){
-        $controller = 'clients';
-        $view = 'updateInfo';
-        $pagetitle = 'Modifications';
-        $c = ModelClients::getClientByMail($_GET['mail']);
-        require File::build_path(array("view","view.php"));
-    }
-
-    public static function updateMDP(){
-        $controller = 'clients';
-        $view = 'updateMDP';
-        $pagetitle = 'Changement mot de passe';
-        $c = ModelClients::getClientByMail($_GET['mail']);
+    public static function updateCommandes(){
+        $controller = 'commandes';
+        $view = 'updateCommandes';
+        $pagetitle = 'Changement du nombre de commandes';
+        $c = ModelCommandes::getCommProd($_GET['id_comm'],$_GET['id_prod']);
         require File::build_path(array("view","view.php"));
     }
 
     public static function updated(){
-        echo 'Vos informations ont été mises à jour:<br>';//Email: '.$_GET['mail'].'<br>Nom: '.$_GET['nom'].' '.$_GET['prenom'].'<br>Adresse: '.$_GET['rue'].' '.$_GET['code'].' '.$_GET['ville'].'<br>';
-        $c = new ModelClients($_GET['mail'],NULL,$_GET['nom'],$_GET['prenom'],$_GET['ville'],$_GET['code'],$_GET['rue']);
-        $c->updateInfoClient();
-        ControllerClients::read();
+        echo 'Votre commande a été mise à jour:<br>';//Email: '.$_GET['mail'].'<br>Nom: '.$_GET['nom'].' '.$_GET['prenom'].'<br>Adresse: '.$_GET['rue'].' '.$_GET['code'].' '.$_GET['ville'].'<br>';
+        $c = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
+        $c->update();
+        ControllerCommandes::read();
     }
-    //TODO
-    //public static function updatedMDP
 }
 ?>

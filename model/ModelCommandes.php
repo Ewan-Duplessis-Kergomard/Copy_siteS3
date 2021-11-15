@@ -68,6 +68,16 @@ class ModelClients {
         if(empty($tab_commandes))return false;
         return $tab_commandes[0];
     }
+    public static function getCommProd($id_comm,$id_prod){
+        $sql = "SELECT * FROM p_commandes WHERE id_comm=:id_comm AND id_prod=:id_prod";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("id_comm"=>$id_comm);
+        $req_prep->execute($values);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelCommandes');
+        $tab_commandes = $req_prep->fetchAll();
+        if(empty($tab_commandes))return false;
+        return $tab_commandes[0];
+    }
 
     public function save(){
         $sql = "INSERT INTO p_commandes (id_comm,id_prod,quantité) VALUES (:id_comm,:id_prod,:quantité)";
