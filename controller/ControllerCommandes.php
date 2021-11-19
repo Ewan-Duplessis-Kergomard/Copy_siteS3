@@ -32,6 +32,7 @@ class ControllerCommandes {
 
     public static function created(){
         $commandes = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
+        var_dump($commandes);
         $commandes->save();
         //afficher confirmation de commandes
     }

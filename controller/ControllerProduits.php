@@ -31,7 +31,7 @@ class ControllerProduits {
     }
 
     public static function created(){
-        $prod = new ModelProduits($_GET['id_prod'],$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
+        $prod = new ModelProduits(NULL,$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
         $prod->save();
 
     }
