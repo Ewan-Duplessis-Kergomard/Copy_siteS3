@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Clients</title>
+    <title>Produits</title>
 </head>
 <body>
 <?php

@@ -52,7 +52,7 @@ class ControllerCommandes {
     }
 
     public static function deleted(){
-        ModelClients::deleteByID($_GET['id_comm'],$_GET['id_prod']);
+        ModelCommandes::deleteByID($_GET['id_comm'],$_GET['id_prod']);
         echo 'Commandes numéro'.$_GET['id_comm'].$_GET['id_prod'].' supprimé.<br>';
     }
 

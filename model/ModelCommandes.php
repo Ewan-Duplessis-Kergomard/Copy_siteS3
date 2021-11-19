@@ -7,7 +7,7 @@
 <body>
 <?php
 require_once File::build_path(array("model","Model.php"));
-class ModelClients {
+class ModelCommandes {
 
     private $id_comm;
     private $id_prod;
