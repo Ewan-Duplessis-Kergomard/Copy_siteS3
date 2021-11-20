@@ -16,13 +16,15 @@ class ModelProduits {
     private $description;
 
 
-    public function __construct($id_prod, $nom_prod, $stock, $prix, $description)
+    public function __construct($id_prod=NULL, $nom_prod=NULL, $stock=NULL, $prix=NULL, $description=NULL)
     {
-        $this->id_prod = $id_prod;
-        $this->nom_prod = $nom_prod;
-        $this->stock = $stock;
-        $this->prix = $prix;
-        $this->description = $description;
+        if(!is_null($id_prod)){$this->id_prod = $id_prod;}
+        if(!is_null($nom_prod)&&!is_null($stock)&&!is_null($prix)&&!is_null($description)) {
+            $this->nom_prod = $nom_prod;
+            $this->stock = $stock;
+            $this->prix = $prix;
+            $this->description = $description;
+        }
     }
     public static function getAllProduits(){
         $pdo = Model::$pdo;
@@ -89,13 +91,13 @@ class ModelProduits {
     }
 
     public function save(){
-        $sql = "INSERT INTO p_produits (nom_prod,stock,prix,description) VALUES (:nom_prod,:stock,:prix,:description)";
+        $sql = "INSERT INTO p_produits (nom_prod,stock,prix,description) VALUES (:nom,:stock,:prix,:description)";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("nom_prod"=>$this->nom_prod,"stock"=>$this->stock,"prix"=>$this->prix,"description"=>$this->description);
         $req_prep->execute($values);
     }
 
-    public function getProduitById($id_prod){
+    public static function getProduitById($id_prod){
         $sql = "SELECT * FROM p_produits WHERE id_prod=:id_prod";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("id_prod"=>$id_prod);
