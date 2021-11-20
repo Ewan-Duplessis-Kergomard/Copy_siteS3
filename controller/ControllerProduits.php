@@ -63,7 +63,9 @@ class ControllerProduits {
         echo 'Les informations du produit ont été mises à jour:<br>';
         ControllerProduits::read();
     }
-    //TODO
-    //public static function updatedMDP
+    public static function add(){
+        if(array_key_exists($_GET['id_prod'],$_SESSION['panier'])){$_SESSION['panier'][$_GET['id_prod']]=$_SESSION['panier'][$_GET['id_prod']]+1;}
+        else{$_SESSION['panier'][$_GET['id_prod']]=1;}
+    }
 }
 ?>

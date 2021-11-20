@@ -72,5 +72,12 @@ class ControllerClients {
     }
     //TODO
     //public static function updatedMDP
+
+    public static function panier(){
+        $controller='clients';
+        $view= 'panier';
+        $pagetitle='Votre Panier';
+        require File::build_path(array("view","view.php"));
+    }
 }
 ?>
