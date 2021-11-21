@@ -1,6 +1,12 @@
-<body>
 <?php
-foreach ($tab_c as $c){
-    echo '<a href=index.php?action=read&id_prod='.rawurlencode($c->getIdProd()).'> Produit n°' . htmlspecialchars($c->getIdProd()) .': ' . htmlspecialchars($c->getNomProd()) . '</a><br>';}
+foreach ($tab_c as $c) {
+    echo '<div class="support">
+            <a class="frame" href=index.php?action=read&id_prod=' . rawurlencode($c->getIdProd()) . '>
+                <img src="images/'.htmlspecialchars($c->getIdProd()).'.png" alt="'.htmlspecialchars($c->getNomProd()).'">
+                <p>' . htmlspecialchars($c->getNomProd()) . '</p>
+                <p>' . htmlspecialchars($c->getPrix()) . '€</p>
+            </a>
+        </div>';
+}
+echo"</main>";
 ?>
-</body>
