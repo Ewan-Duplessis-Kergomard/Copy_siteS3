@@ -121,7 +121,7 @@ class ModelClients {
     public function save(){
         $sql = "INSERT INTO p_clients (mail,mdp,nom,prenom,ville,code_poste,rue) VALUES (:mail,:mdp,:nom,:prenom,:ville,:code_poste,:rue)";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code-poste"=>$this->code_poste,"rue"=>$this->rue);
+        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code_poste"=>$this->code_poste,"rue"=>$this->rue);
         $req_prep->execute($values);
     }
 

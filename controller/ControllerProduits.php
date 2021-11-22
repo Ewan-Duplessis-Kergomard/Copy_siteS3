@@ -3,7 +3,7 @@ require_once File::build_path(array("model","ModelProduits.php")); // chargement
 class ControllerProduits {
 
     public static function readAll(){
-        $tab_c = ModelProduits::getAllClients();
+        $tab_c = ModelProduits::getAllProduits();
         $controller = 'produits';
         $view = 'readAll';
         $pagetitle = 'Liste des produits';
@@ -11,7 +11,7 @@ class ControllerProduits {
     }
 
     public static function read(){
-        $c = ModelProduits::getClientByMail($_GET['id_prod']);
+        $c = ModelProduits::getProduitById($_GET['id_prod']);
         $controller = 'produits';
         if($c==false){
             $view='error';
@@ -31,7 +31,7 @@ class ControllerProduits {
     }
 
     public static function created(){
-        $prod = new ModelProduits($_GET['id_prod'],$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
+        $prod = new ModelProduits(NULL,$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
         $prod->save();
 
     }
@@ -44,7 +44,7 @@ class ControllerProduits {
     }
 
     public static function deleted(){
-        ModelProduits::deleteByMail($_GET['id_prod']);
+        ModelProduits::deleteById($_GET['id_prod']);
         echo 'Produit n° '.$_GET['id_prod'].' supprimé.<br>';
     }
 
@@ -58,12 +58,14 @@ class ControllerProduits {
 
 
     public static function updated(){
-        $c = new ModelClients($_GET['id_prod'],$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
+        $c = new ModelProduits($_GET['id_prod'],$_GET['nom_prod'],$_GET['stock'],$_GET['prix'],$_GET['description']);
         $c->updateInfoProduit();
         echo 'Les informations du produit ont été mises à jour:<br>';
         ControllerProduits::read();
     }
-    //TODO
-    //public static function updatedMDP
+    public static function add(){
+        if(array_key_exists($_GET['id_prod'],$_SESSION['panier'])){$_SESSION['panier'][$_GET['id_prod']]=$_SESSION['panier'][$_GET['id_prod']]+1;}
+        else{$_SESSION['panier'][$_GET['id_prod']]=1;}
+    }
 }
 ?>

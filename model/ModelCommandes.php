@@ -7,7 +7,7 @@
 <body>
 <?php
 require_once File::build_path(array("model","Model.php"));
-class ModelClients {
+class ModelCommandes {
 
     private $id_comm;
     private $id_prod;
@@ -82,9 +82,9 @@ class ModelClients {
     }
 
     public function save(){
-        $sql = "INSERT INTO p_commandes (id_comm,id_prod,quantité) VALUES (:id_comm,:id_prod,:quantité)";
+        $sql = "INSERT INTO p_commandes (id_comm,id_prod,quantité) VALUES (:id_comm,:id_prod,:quantite)";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("id_comm"=>$this->id_comm,"id_prod"=>$this->id_prod,"quantité"=>$this->quantité);
+        $values = array("id_comm"=>$this->id_comm,"id_prod"=>$this->id_prod,"quantite"=>$this->quantité);
         $req_prep->execute($values);
     }
 
