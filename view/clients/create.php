@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title> Mon premier php </title>
-</head>
 <body>
 <form method="get" action="index.php">
     <fieldset>
@@ -14,7 +8,9 @@
             <label for="mail">Adresse email</label> :
             <input type="email" placeholder="mail@example.xyz" name="mail" id="mail" required/>
             <label for="mdp">Mot de passe</label> :
-            <input type="text" placeholder="X95eb5/48R" name="mdp" id="mdp" required/>
+            <input type="password" placeholder="X95eb5/48R" name="mdp" id="mdp" required/>
+            <label for="mdp2">Confirmation mot de passe</label> :
+            <input type="password" placeholder="X95eb5/48R" name="mdp2" id="mdp2" required/>
             <label for="nom">Nom</label> :
             <input type="text" placeholder="Ex : Fabre" name="nom" id="nom" required/>
             <label for="prenom">Prénom</label> :
@@ -33,4 +29,3 @@
     </fieldset>
 </form>
 </body>
-</html>

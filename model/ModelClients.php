@@ -136,7 +136,6 @@ class ModelClients {
         $sql = "UPDATE p_clients SET nom=:nom,prenom=:prenom,ville=:ville,code_poste=:code_poste,rue=:rue WHERE mail=:mail";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>htmlspecialchars($this->mail),"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code_poste"=>$this->code_poste,"rue"=>$this->rue);
-        var_dump($values);
         $req_prep->execute($values);
     }
 
@@ -147,6 +146,14 @@ class ModelClients {
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>$this->mail,"mdp"=>$this->mdp);
     }*/
+
+    public static function checkPswd($mail,$mdp){
+        $sql = "SELECT * FROM p_clients WHERE mail=:mail AND mdp=:mdp";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>htmlspecialchars($mail),"mdp"=>htmlspecialchars($mdp));
+        $req_prep->execute($values);
+        return count($req_prep->fetchAll())==1;
+    }
 }
 
 ?>
