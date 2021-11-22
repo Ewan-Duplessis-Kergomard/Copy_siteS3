@@ -31,8 +31,14 @@ class ControllerClients {
     }
 
     public static function created(){
-        $client = new ModelClients($_GET['mail'],$_GET['mdp'],$_GET['nom'],$_GET['prenom'],$_GET['ville'],$_GET['code'],$_GET['rue']);
-        $client->save();
+        require_once File::build_path(array("lib","Security.php"));
+        if ($_GET['mdp']===$_GET['mdp2']) {
+            $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue']);
+            $client->save();
+        }else{
+            $view='error';
+            require File::build_path(array("view","view.php"));
+        }
         //afficher msg confirmation
     }
 
@@ -78,6 +84,27 @@ class ControllerClients {
         $view= 'panier';
         $pagetitle='Votre Panier';
         require File::build_path(array("view","view.php"));
+    }
+
+    public static function connect(){
+        $controller='clients';
+        $view='connect';
+        $pagetitle='Connexion';
+        require File::build_path(array("view","view.php"));
+    }
+
+    public static function connected(){
+        require_once File::build_path(array("lib","Security.php"));
+        if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
+            $_SESSION['login']=$_GET['mail'];
+            $controller = 'produits';
+            $view = 'readAll';
+            require File::build_path(array("view","view.php"));
+        }else{
+            $controller = 'clients';
+            $view = 'error';
+            require File::build_path(array("view","view.php"));
+        }
     }
 }
 ?>
