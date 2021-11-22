@@ -9,14 +9,15 @@
     <fieldset>
         <legend>Ma commande :</legend>
         <p>
+            <input type='hidden' name='controller' value='<?php echo $controller ?>'>
             <input type='hidden' name='action' value='created'>
             <label for="id_comm">Identifiant de commande</label> :
-            <input type="number" placeholder="1414765" name="Identifiant Commande" id="id_comm" required/>
+            <input type="number" placeholder="1414765" name="id_comm" id="id_comm" required/>
             <label for="id_prod">Identifiant de Produit</label> :
-            <input type="number" placeholder="445466" name="Identifiant Produit" id="id_prod" required/>
+            <input type="number" placeholder="445466" name="id_prod" id="id_prod" required/>
             <!--A faire automatiquement-->
             <label for="quantité">Quantité</label> :
-            <input type="number" placeholder="1" name="Quantité" id="nom" required/>
+            <input type="number" placeholder="1" name="quantité" id="nom" required/>
 
         </p>
         <p>

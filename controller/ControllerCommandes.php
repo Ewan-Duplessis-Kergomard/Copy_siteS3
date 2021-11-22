@@ -11,7 +11,7 @@ class ControllerCommandes {
     }
 
     public static function read(){
-        $c = ModelCommandes::getCommandesByid($_GET['id_comm']);
+        $c = ModelCommandes::getCommandesByid($_GET['id_comm']) ;
         $controller = 'commandes';
         if($c==false){
             $view='error';
@@ -32,6 +32,7 @@ class ControllerCommandes {
 
     public static function created(){
         $commandes = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
+        var_dump($commandes);
         $commandes->save();
         //afficher confirmation de commandes
     }
@@ -52,7 +53,7 @@ class ControllerCommandes {
     }
 
     public static function deleted(){
-        ModelClients::deleteByID($_GET['id_comm'],$_GET['id_prod']);
+        ModelCommandes::deleteByID($_GET['id_comm'],$_GET['id_prod']);
         echo 'Commandes numéro'.$_GET['id_comm'].$_GET['id_prod'].' supprimé.<br>';
     }
 
