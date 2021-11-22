@@ -1,3 +1,4 @@
+<div class=\"list_prod\">
 <?php
 foreach ($tab_c as $c) {
     echo '<div class="support">
@@ -10,3 +11,4 @@ foreach ($tab_c as $c) {
 }
 echo"</main>";
 ?>
+</div>
