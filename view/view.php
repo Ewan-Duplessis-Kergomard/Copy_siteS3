@@ -13,15 +13,16 @@ echo " <header>
         <nav>
             <div class=\"navbar\">
                 <a href=\"index.php\">Accueil</a>";
+                var_dump($_SESSION);
                 if(isset($_SESSION['login'])){
-                    echo "<a href=\"index.php?controller=clients&action=read&mail=".$_SESSION['login']."\">Profil</a>
+                    echo "<a href=\"?controller=clients&action=read&mail=".$_SESSION['login']."\">Profil</a>
                     <a href=\"nowhere\">Panier</a>
                     <a href=\"nowhere\">Déconnexion</a>";//TODO gérer deconnexion
-                    if ($_SESSION['isAdmin']==1){echo "<a href=\"nowhere\">Panneau de contrôle</a>";}
+                    /*if ($_SESSION['isAdmin']==1){echo "<a href=\"nowhere\">Panneau de contrôle</a>";}*/
                 }
                 else{
-                    echo "<a href=\"nowhere\">Connexion</a>
-                    <a href=\"nowhere\">Inscription</a>";//TODO connexion (?controller=clients&action=create) après td sécurité
+                    echo "<a href=\"?controller=clients&action=connect\">Connexion</a>
+                    <a href=\"?controller=clients&action=create\">Inscription</a>";
                 }
                 echo "</div></nav></header>";
 

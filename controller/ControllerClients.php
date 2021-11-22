@@ -97,9 +97,8 @@ class ControllerClients {
         require_once File::build_path(array("lib","Security.php"));
         if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
             $_SESSION['login']=$_GET['mail'];
-            $controller = 'produits';
-            $view = 'readAll';
-            require File::build_path(array("view","view.php"));
+            var_dump($_SESSION);
+            header('index.php?controller=produits&action=readAll');
         }else{
             $controller = 'clients';
             $view = 'error';
