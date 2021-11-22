@@ -1,0 +1,29 @@
+div.image-frame img{
+    width: 50%;
+    height: 70%;
+}
+
+.image-frame{
+    width: 50%;
+}
+.product-info{
+    width: 50%;
+}
+
+.description-frame{
+    border: 5px solid #000;
+    resize: none;
+    cursor: default;
+    width: 10vw;
+    height: 20vh;
+}
+
+.product-name{
+    color:#f00;
+    font-size: 50px;
+}
+
+.product-price{
+    color:#1779F9;
+    font-size: 45px;
+}

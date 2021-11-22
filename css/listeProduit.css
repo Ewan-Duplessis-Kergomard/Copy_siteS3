@@ -1,0 +1,20 @@
+.fenetre{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+    max-width: 1200px;
+}
+
+.product-frame{
+    border: 2px solid #fff;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    margin: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color:#000;
+}
