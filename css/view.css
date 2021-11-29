@@ -3,7 +3,6 @@ body{
     flex-direction: column;
     align-items: center;
     justify-items: flex-start;
-    background-image: url("../images/bckgrnd.png");
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -57,31 +56,45 @@ main{
     display: flex;
     flex-wrap: wrap;
     width:25%;
-    align-items: center;
     min-width: 150px;
-
 }
 
-.support:hover{
-    background-color: #dedddd;
-    transition-duration: 0.5s;
-}
 
 .\\\"list_prod\\\"{
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     width: 100%;
 }
 
 img.prod_img{
-    width: 75%;
+    width: 100%;
+    display: flex;
 }
 
 .frame{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    flex-grow: 1;
     width: 80%;
-    margin: 10%;
+    margin: 5%;
+    align-items: center;
+    transition: 0.5s;
+    text-decoration: none;
+}
+.frame:hover{
+    transition-duration: 0.5s;
+    margin: 0%;
+}
+
+.frame:hover .prod_img{
+    filter: blur(3px);
+}
+
+.prod_name{
+    color: #1779F9;
+}
+
+.prod_name:visited{
+    color: #1779F9;
 }
