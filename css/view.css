@@ -3,7 +3,6 @@ body{
     flex-direction: column;
     align-items: center;
     justify-items: flex-start;
-    background-image: url("../images/bckgrnd.png");
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -57,31 +56,51 @@ main{
     display: flex;
     flex-wrap: wrap;
     width:25%;
-    align-items: center;
     min-width: 150px;
-
 }
 
-.support:hover{
-    background-color: #dedddd;
-    transition-duration: 0.5s;
-}
 
 .\\\"list_prod\\\"{
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     width: 100%;
+    margin-top: 5%;
 }
 
 img.prod_img{
-    width: 75%;
+    width: 100%;
+    display: flex;
 }
 
 .frame{
+    background: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    flex-grow: 1;
     width: 80%;
-    margin: 10%;
+    margin: 5%;
+    align-items: center;
+    transition: 0.5s;
+    text-decoration: none;
+    font: bold 1.5em "Serif";
+}
+.frame:hover{
+    box-shadow: 0 0 0.5em black;
+    transition-duration: 0.5s;
+    margin: 0%;
+}
+
+.prod_name{
+    margin: 3%;
+    color: black;
+}
+
+.prod_name:visited{
+    color: black;
+}
+
+.prod_price{
+    margin: 3%;
+    color: #7ed755;
 }
