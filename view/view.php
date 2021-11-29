@@ -24,7 +24,7 @@ echo " <header>
                     echo "<a href=\"?controller=clients&action=connect\">Connexion</a>
                     <a href=\"?controller=clients&action=create\">Inscription</a>";
                 }
-                echo "<a href=\"?controller=clients&action=panier\">Panier</a>
+                echo "<a href=\"?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
                       <a href=\"view/contact/create.php\">Contact</a>
                     </div></nav></header>";
 
