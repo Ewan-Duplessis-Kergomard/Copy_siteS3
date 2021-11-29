@@ -9,7 +9,9 @@
     <fieldset>
         <legend>Ma commande :</legend>
         <p>
-            <input type='hidden' name='controller' value='<?php echo $controller ?>'>
+            <input type='hidden' name='controller' value='<?php if (!empty($controller)) {
+                echo $controller;
+            } ?>'>
             <input type='hidden' name='action' value='created'>
             <label for="id_comm">Identifiant de commande</label> :
             <input type="number" placeholder="1414765" name="id_comm" id="id_comm" required/>

@@ -58,7 +58,7 @@ main{
     flex-wrap: wrap;
     width:25%;
     align-items: center;
-    min-width: 100px;
+    min-width: 150px;
 
 }
 
@@ -75,7 +75,7 @@ main{
 }
 
 img.prod_img{
-    width: 50%;
+    width: 75%;
 }
 
 .frame{
