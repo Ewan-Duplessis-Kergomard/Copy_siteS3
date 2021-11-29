@@ -68,5 +68,12 @@ class ControllerProduits {
         else{$_SESSION['panier'][$_GET['id_prod']]=1;}
         ControllerProduits::readAll();
     }
+
+    public static function favori(){
+        if(array_search($_GET['id_prod'],$_SESSION['favoris'])!=false){
+        ModelClients::addFavori($_SESSION['login'],$_GET['id_prod']);}
+        else{ModelClients::deleteFavori($_SESSION['login'],$_GET['id_prod']);}
+        ControllerProduits::read();
+    }
 }
 ?>

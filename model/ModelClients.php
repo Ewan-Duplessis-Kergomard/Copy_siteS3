@@ -154,6 +154,30 @@ class ModelClients {
         $req_prep->execute($values);
         return count($req_prep->fetchAll())==1;
     }
+
+    public static function getFavoris($mail){
+        $sql = "SELECT id_prod FROM p_favoris WHERE mail_client=:mail";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>htmlspecialchars($mail));
+        $req_prep->execute($values);
+        return $req_prep->fetchAll();
+    }
+
+    public static function addFavori($mail,$idprod){
+        $sql = "INSERT INTO p_favoris(mail_client,id_prod) VALUES (:mail,:id_prod)";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>htmlspecialchars($mail),"id_prod"=>$idprod);
+        $req_prep->execute($values);
+        $_SESSION['favoris']->push($idprod);
+    }
+
+    public static function deleteFavori($mail,$idprod){
+        $sql = "DELETE FROM p_favoris WHERE mail_client=:mail AND id_prod=:id_prod";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>htmlspecialchars($mail),"id_prod"=>$idprod);
+        $req_prep->execute($values);
+        unset($_SESSION['favoris'][array_search($idprod,$_SESSION['favoris'])]);
+    }
 }
 
 ?>

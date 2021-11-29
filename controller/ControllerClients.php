@@ -97,6 +97,7 @@ class ControllerClients {
         require_once File::build_path(array("lib","Security.php"));
         if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
             $_SESSION['login']=$_GET['mail'];
+            $_SESSION['favoris']=ModelClients::getFavoris($_GET['mail']);
             ControllerProduits::readAll();
         }else{
             $controller = 'clients';
