@@ -3,7 +3,9 @@
     <fieldset>
         <legend>Mon formulaire :</legend>
         <p>
-            <input type='hidden' name='controller' value='<?php echo $controller ?>'>
+            <input type='hidden' name='controller' value='<?php if (!empty($controller)) {
+                echo $controller;
+            } ?>'>
             <input type='hidden' name='action' value='created'>
             <label for="mail">Adresse email</label> :
             <input type="email" placeholder="mail@example.xyz" name="mail" id="mail" required/>

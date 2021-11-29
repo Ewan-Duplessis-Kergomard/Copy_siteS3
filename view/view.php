@@ -5,7 +5,9 @@
         <link rel="stylesheet" type="text/css" href=css/view.css>
         <link rel="stylesheet" type="text/css" href=css/detailProduit.css>
         <link rel="stylesheet" type="text/css" href=css/listeProduit.css>
-        <title><?php echo $pagetitle; ?></title>
+        <title><?php if (!empty($pagetitle)) {
+                echo $pagetitle;
+            } ?></title>
     </head>
     <body>
 <?php
@@ -23,11 +25,17 @@ echo " <header>
                     <a href=\"?controller=clients&action=create\">Inscription</a>";
                 }
                 echo "<a href=\"?controller=clients&action=panier\">Panier</a>
+                      <a href=\"view/contact/create.php\">Contact</a>
                     </div></nav></header>";
+
 
 // Si $controleur='voiture' et $view='list',
 // alors $filepath="/chemin_du_site/view/voiture/list.php"
-$filepath = File::build_path(array("view", $controller, "$view.php"));
+if (!empty($controller)) {
+    if (!empty($view)) {
+        $filepath = File::build_path(array("view", $controller, "$view.php"));
+    }
+}
 require $filepath;
 ?>
     </body>

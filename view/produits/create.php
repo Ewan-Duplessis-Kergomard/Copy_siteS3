@@ -9,7 +9,9 @@
     <fieldset>
         <legend>Ajout de produit:</legend>
         <p>
-            <input type='hidden' name='controller' value='<?php echo $controller ?>'>
+            <input type='hidden' name='controller' value='<?php if (!empty($controller)) {
+                echo $controller;
+            } ?>'>
             <input type='hidden' name='action' value='created'>
             <!--<label for="id_prod">ID du produit</label> :
             <input type="number" placeholder="id propre au produit" name="id_prod" id="id_prod" required/>-->
