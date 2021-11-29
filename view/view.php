@@ -13,18 +13,17 @@ echo " <header>
         <nav>
             <div class=\"navbar\">
                 <a href=\"index.php\">Accueil</a>";
-                var_dump($_SESSION);
                 if(isset($_SESSION['login'])){
                     echo "<a href=\"?controller=clients&action=read&mail=".$_SESSION['login']."\">Profil</a>
-                    <a href=\"nowhere\">Panier</a>
-                    <a href=\"nowhere\">Déconnexion</a>";//TODO gérer deconnexion
+                    <a href=\"?controller=clients&action=disconnect\">Déconnexion</a>";//TODO gérer deconnexion
                     /*if ($_SESSION['isAdmin']==1){echo "<a href=\"nowhere\">Panneau de contrôle</a>";}*/
                 }
                 else{
                     echo "<a href=\"?controller=clients&action=connect\">Connexion</a>
                     <a href=\"?controller=clients&action=create\">Inscription</a>";
                 }
-                echo "</div></nav></header>";
+                echo "<a href=\"?controller=clients&action=panier\">Panier</a>
+                    </div></nav></header>";
 
 // Si $controleur='voiture' et $view='list',
 // alors $filepath="/chemin_du_site/view/voiture/list.php"

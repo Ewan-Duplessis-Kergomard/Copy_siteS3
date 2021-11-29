@@ -1,6 +1,5 @@
 <?php
 $prixtotal=0;
-var_dump($_SESSION['panier']);
 foreach ($_SESSION['panier'] as $id => $qte){
     $p = ModelProduits::getProduitById($id);
     $cout=$p->getPrix()*$qte;
