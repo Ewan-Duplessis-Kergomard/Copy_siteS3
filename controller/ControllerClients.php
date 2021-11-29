@@ -97,13 +97,17 @@ class ControllerClients {
         require_once File::build_path(array("lib","Security.php"));
         if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
             $_SESSION['login']=$_GET['mail'];
-            var_dump($_SESSION);
-            header('index.php?controller=produits&action=readAll');
+            ControllerProduits::readAll();
         }else{
             $controller = 'clients';
             $view = 'error';
             require File::build_path(array("view","view.php"));
         }
+    }
+
+    public static function disconnect(){
+        session_unset();
+        ControllerProduits::readAll();
     }
 }
 ?>
