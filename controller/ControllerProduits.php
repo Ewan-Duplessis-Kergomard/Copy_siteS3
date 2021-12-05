@@ -70,8 +70,8 @@ class ControllerProduits {
     }
 
     public static function favori(){
-        if(array_search($_GET['id_prod'],$_SESSION['favoris'])!=false){
-        ModelClients::addFavori($_SESSION['login'],$_GET['id_prod']);}
+        var_dump(array_search($_GET['id_prod'],$_SESSION['favoris']));
+        if(array_search($_GET['id_prod'],$_SESSION['favoris'])==false){ModelClients::addFavori($_SESSION['login'],$_GET['id_prod']);}
         else{ModelClients::deleteFavori($_SESSION['login'],$_GET['id_prod']);}
         ControllerProduits::read();
     }

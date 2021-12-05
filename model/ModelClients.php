@@ -167,7 +167,7 @@ class ModelClients {
         $values = array("mail"=>htmlspecialchars($mail));
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_NUM);
-        return $req_prep->fetchAll()[0];
+        return $req_prep->fetchAll();
     }
 
     public static function addFavori($mail,$idprod){
@@ -175,7 +175,7 @@ class ModelClients {
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>htmlspecialchars($mail),"id_prod"=>$idprod);
         $req_prep->execute($values);
-        $_SESSION['favoris']->push($idprod);
+        $_SESSION['favoris'][]=$idprod;
     }
 
     public static function deleteFavori($mail,$idprod){
