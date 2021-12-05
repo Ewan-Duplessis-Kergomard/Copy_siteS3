@@ -16,6 +16,7 @@ class ModelClients {
     private $ville;
     private $code_poste;
     private $rue;
+    private $isAdmin;
 
     public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL)
     {
@@ -103,6 +104,11 @@ class ModelClients {
         $this->rue = $rue;
     }
 
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
     public function afficher(){
         echo "Client $this->prenom $this->nom, mail: $this->mail, adresse: $this->rue $this->code_poste $this->ville";
     }
@@ -160,7 +166,8 @@ class ModelClients {
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>htmlspecialchars($mail));
         $req_prep->execute($values);
-        return $req_prep->fetchAll();
+        $req_prep->setFetchMode(PDO::FETCH_NUM);
+        return $req_prep->fetchAll()[0];
     }
 
     public static function addFavori($mail,$idprod){

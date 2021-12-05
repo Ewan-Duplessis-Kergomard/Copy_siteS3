@@ -18,7 +18,7 @@ echo " <header>
                 if(isset($_SESSION['login'])){
                     echo "<a href=\"?controller=clients&action=read&mail=".$_SESSION['login']."\">Profil</a>
                     <a href=\"?controller=clients&action=disconnect\">Déconnexion</a>";//TODO gérer deconnexion
-                    /*if ($_SESSION['isAdmin']==1){echo "<a href=\"nowhere\">Panneau de contrôle</a>";}*/
+                    if ($_SESSION['isAdmin']==1){echo "<a href=\"?controller=clients&action=readAll\">Panneau de contrôle</a>";}
                 }
                 else{
                     echo "<a href=\"?controller=clients&action=connect\">Connexion</a>

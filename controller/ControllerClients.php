@@ -98,6 +98,7 @@ class ControllerClients {
         if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
             $_SESSION['login']=$_GET['mail'];
             $_SESSION['favoris']=ModelClients::getFavoris($_GET['mail']);
+            $_SESSION['isAdmin']=ModelClients::getClientByMail($_GET['mail'])->getIsAdmin();
             ControllerProduits::readAll();
         }else{
             $controller = 'clients';
