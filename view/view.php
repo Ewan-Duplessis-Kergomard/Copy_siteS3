@@ -27,8 +27,8 @@ echo " <header>
 
 // faire un count dans session panier pour chaque produit
 //echo $_SESSION['panier']['1']
-echo "<a href=\"?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
-                      <a href=\"view/contact/create.php\">Contact</a>
+echo "<a href=\"view/contact/create.php\">Contact</a>
+        <a href=\"?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
                     </div></nav></header>";
 
 
