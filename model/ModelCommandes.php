@@ -29,7 +29,13 @@ class ModelCommandes {
         $tab_commandes = $rep->fetchAll();
         return $tab_commandes;
     }
-
+    public static function getAllCommandesByMail($mail){
+        $pdo = Model::$pdo;
+        $rep = $pdo->query('SELECT * FROM p_comm_client cc JOIN p_commandes c ON c.id_comm=cc.id_comm WHERE cc.mail=:mail');
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelCommandes');
+        $tab_commandes = $rep->fetchAll();
+        return $tab_commandes;
+    }
     public function getIdComm()
     {
         return $this->id_comm;

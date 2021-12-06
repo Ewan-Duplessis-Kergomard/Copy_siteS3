@@ -22,6 +22,18 @@ class ControllerCommandes {
             $pagetitle='Votre commande';
             require File::build_path(array("view","view.php"));
     }
+    public static function readbyMail(){
+        $c = ModelCommandes::getAllCommandesByMail($_GET['mail']) ;
+        $controller = 'commandes';
+        if($c==false){
+            $view='error';
+            $pagetitle='Erreur';
+            require File::build_path(array("view","view.php"));}
+        else
+            $view='read';
+        $pagetitle='Les commandes du client :';
+        require File::build_path(array("view","view.php"));
+    }
 
     public static function create(){
         $controller = 'commandes';
