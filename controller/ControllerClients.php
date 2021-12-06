@@ -31,13 +31,20 @@ class ControllerClients {
     }
 
     public static function created(){
-        require_once File::build_path(array("lib","Security.php"));
-        if ($_GET['mdp']===$_GET['mdp2']) {
-            $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue']);
-            $client->save();
+        if (isset($_GET['mail']) && isset($_GET['mdp']) && isset($_GET['mdp2']) && isset($_GET['nom']) && isset($_GET['prenom']) && isset($_GET['ville']) && isset($_GET['code']) && isset($_GET['rue'])){
+            if (filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && $_GET['mdp']===$_GET['mdp2'] && filter_var($_GET['code'],FILTER_VALIDATE_INT)){
+                require_once File::build_path(array("lib","Security.php"));
+                $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue']);
+                $client->save();
+                echo '<p>Inscription réussie. Un mail de confirmation vous a été envoyé</p>';
+                ControllerClients::connect();
+            }else{
+                ControllerClients::create();
+                echo '<p>Informations invalides ou erronnées</p>';
+            }
         }else{
-            $view='error';
-            require File::build_path(array("view","view.php"));
+            ControllerClients::create();
+            echo '<p>Informations incomplètes';
         }
         //afficher msg confirmation
     }
@@ -94,16 +101,19 @@ class ControllerClients {
     }
 
     public static function connected(){
-        require_once File::build_path(array("lib","Security.php"));
-        if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))){
-            $_SESSION['login']=$_GET['mail'];
-            $_SESSION['favoris']=ModelClients::getFavoris($_GET['mail']);
-            $_SESSION['isAdmin']=ModelClients::getClientByMail($_GET['mail'])->getIsAdmin();
-            ControllerProduits::readAll();
+        if(isset($_GET['mail']) && isset($_GET['mdp']) ){
+            if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['login'] = $_GET['mail'];
+                $_SESSION['favoris'] = ModelClients::getFavoris($_GET['mail']);
+                $_SESSION['isAdmin'] = ModelClients::getClientByMail($_GET['mail'])->getIsAdmin();
+                ControllerProduits::readAll();
+            }else{
+                ControllerClients::connect();
+                echo '<p>Informations invalides ou erronnées</p>';
+            }
         }else{
-            $controller = 'clients';
-            $view = 'error';
-            require File::build_path(array("view","view.php"));
+            ControllerClients::connect();
+            echo '<p>Veuillez remplir tous les champs</p>';
         }
     }
 
