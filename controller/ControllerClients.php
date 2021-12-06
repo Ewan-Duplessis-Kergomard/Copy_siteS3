@@ -3,11 +3,14 @@ require_once File::build_path(array("model","ModelClients.php")); // chargement 
 class ControllerClients {
 
     public static function readAll(){
-        $tab_c = ModelClients::getAllClients();
-        $controller = 'clients';
-        $view = 'readAll';
-        $pagetitle = 'Liste Clients';
-        require File::build_path(array("view","view.php"));
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p>VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else{
+            $tab_c = ModelClients::getAllClients();
+            $controller = 'clients';
+            $view = 'readAll';
+            $pagetitle = 'Liste Clients';
+            require File::build_path(array("view","view.php"));
+        }
     }
 
     public static function read(){
@@ -40,7 +43,7 @@ class ControllerClients {
                 ControllerClients::connect();
             }else{
                 ControllerClients::create();
-                echo '<p>Informations invalides ou erronnées</p>';
+                echo '<p>Informations invalides ou erronées</p>';
             }
         }else{
             ControllerClients::create();
@@ -102,6 +105,7 @@ class ControllerClients {
 
     public static function connected(){
         if(isset($_GET['mail']) && isset($_GET['mdp']) ){
+            require_once File::build_path(array("lib","Security.php"));
             if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['login'] = $_GET['mail'];
                 $_SESSION['favoris'] = ModelClients::getFavoris($_GET['mail']);
@@ -109,7 +113,7 @@ class ControllerClients {
                 ControllerProduits::readAll();
             }else{
                 ControllerClients::connect();
-                echo '<p>Informations invalides ou erronnées</p>';
+                echo '<p>Informations invalides ou erronées</p>';
             }
         }else{
             ControllerClients::connect();
