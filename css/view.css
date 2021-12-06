@@ -124,6 +124,15 @@ img.prod_img{
     color: #7ed755;
 }
 
+/* Partie formulaire d'inscription */
+p.formulaire{
+    display: flex;
+    flex-direction: column ;
+}
 
+div.f_input{
+    padding: 3%;
+    display: flex;
+}
 
 
