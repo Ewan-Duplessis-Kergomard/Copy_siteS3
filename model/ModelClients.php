@@ -166,7 +166,7 @@ class ModelClients {
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>htmlspecialchars($mail));
         $req_prep->execute($values);
-        $req_prep->setFetchMode(PDO::FETCH_NUM);
+        $req_prep->setFetchMode(PDO::FETCH_COLUMN,0);
         return $req_prep->fetchAll();
     }
 
