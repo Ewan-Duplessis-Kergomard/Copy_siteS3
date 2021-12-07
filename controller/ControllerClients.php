@@ -107,13 +107,14 @@ class ControllerClients {
     public static function connected(){
         if(isset($_GET['mail']) && isset($_GET['mdp']) ){
             require_once File::build_path(array("lib","Security.php"));
-            if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && is_null(ModelClients::getClientByMail($_GET['mail'])->getNonce())) {
+            if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && ModelClients::getClientByMail($_GET['mail'])->getNonce()=="") {
                 $_SESSION['login'] = $_GET['mail'];
                 $_SESSION['favoris'] = ModelClients::getFavoris($_GET['mail']);
                 $_SESSION['isAdmin'] = ModelClients::getClientByMail($_GET['mail'])->getIsAdmin();
                 ControllerProduits::readAll();
-            }else if (!is_null(ModelClients::getClientByMail($_GET['mail'])->getNonce())){
+            }else if (ModelClients::getClientByMail($_GET['mail'])->getNonce()!=""){
                 ControllerClients::connect();
+                var_dump(ModelClients::getClientByMail($_GET['mail'])->getNonce());
                 echo '<p class="warning">Veuillez valider votre adresse email</p>';
             }
             else{
