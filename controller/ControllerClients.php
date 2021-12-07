@@ -38,7 +38,7 @@ class ControllerClients {
             if (filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && $_GET['mdp']===$_GET['mdp2'] && filter_var($_GET['code'],FILTER_VALIDATE_INT)){
                 require_once File::build_path(array("lib","Security.php"));
                 $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue'],Security::generateRandomHex());
-                mail(htmlspecialchars($client->getMail()),"Confirmation de votre inscription","Veuillez cliquez sur le lien suivant pour confirmer votre inscription: https://webinfo.iutmontp.univ-montp2.fr/~duplessise/projet_php/php-projet-s3/?controller=clients&action=validate&mail".htmlspecialchars($client->getMail())."&nonce=".$client->getNonce());
+                mail(htmlspecialchars($client->getMail()),"Confirmation de votre inscription","Veuillez cliquez sur le lien suivant pour confirmer votre inscription: https://webinfo.iutmontp.univ-montp2.fr/~duplessise/projet_php/php-projet-s3/?controller=clients&action=validate&mail=".htmlspecialchars($client->getMail())."&nonce=".$client->getNonce());
                 $client->save();
                 echo '<p>Inscription réussie. Un mail de confirmation vous a été envoyé</p>';
                 ControllerClients::connect();
