@@ -3,7 +3,7 @@ require_once File::build_path(array("model","ModelClients.php")); // chargement 
 class ControllerClients {
 
     public static function readAll(){
-        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p>VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
         else{
             $tab_c = ModelClients::getAllClients();
             $controller = 'clients';
@@ -37,17 +37,18 @@ class ControllerClients {
         if (isset($_GET['mail']) && isset($_GET['mdp']) && isset($_GET['mdp2']) && isset($_GET['nom']) && isset($_GET['prenom']) && isset($_GET['ville']) && isset($_GET['code']) && isset($_GET['rue'])){
             if (filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && $_GET['mdp']===$_GET['mdp2'] && filter_var($_GET['code'],FILTER_VALIDATE_INT)){
                 require_once File::build_path(array("lib","Security.php"));
-                $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue']);
+                $client = new ModelClients($_GET['mail'], Security::hacher($_GET['mdp']), $_GET['nom'], $_GET['prenom'], $_GET['ville'], $_GET['code'], $_GET['rue'],Security::generateRandomHex());
+                mail(htmlspecialchars($client->getMail()),"Confirmation de votre inscription","Veuillez cliquez sur le lien suivant pour confirmer votre inscription: https://webinfo.iutmontp.univ-montp2.fr/~duplessise/projet_php/php-projet-s3/?controller=clients&action=validate&mail".htmlspecialchars($client->getMail())."&nonce=".$client->getNonce());
                 $client->save();
                 echo '<p>Inscription réussie. Un mail de confirmation vous a été envoyé</p>';
                 ControllerClients::connect();
             }else{
                 ControllerClients::create();
-                echo '<p>Informations invalides ou erronées</p>';
+                echo '<p class="warning">Informations invalides ou erronées</p>';
             }
         }else{
             ControllerClients::create();
-            echo '<p>Informations incomplètes';
+            echo '<p class="warning">Informations incomplètes';
         }
         //afficher msg confirmation
     }
@@ -106,24 +107,35 @@ class ControllerClients {
     public static function connected(){
         if(isset($_GET['mail']) && isset($_GET['mdp']) ){
             require_once File::build_path(array("lib","Security.php"));
-            if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL)) {
+            if(ModelClients::checkPswd($_GET['mail'],Security::hacher($_GET['mdp']))&& filter_var(htmlspecialchars($_GET['mail']), FILTER_VALIDATE_EMAIL) && is_null(ModelClients::getClientByMail($_GET['mail'])->getNonce())) {
                 $_SESSION['login'] = $_GET['mail'];
                 $_SESSION['favoris'] = ModelClients::getFavoris($_GET['mail']);
                 $_SESSION['isAdmin'] = ModelClients::getClientByMail($_GET['mail'])->getIsAdmin();
                 ControllerProduits::readAll();
-            }else{
+            }else if (!is_null(ModelClients::getClientByMail($_GET['mail'])->getNonce())){
                 ControllerClients::connect();
-                echo '<p>Informations invalides ou erronées</p>';
+                echo '<p class="warning">Veuillez valider votre adresse email</p>';
+            }
+            else{
+                ControllerClients::connect();
+                echo '<p class="warning">Informations invalides ou erronées</p>';
             }
         }else{
             ControllerClients::connect();
-            echo '<p>Veuillez remplir tous les champs</p>';
+            echo '<p class="warning">Veuillez remplir tous les champs</p>';
         }
     }
 
     public static function disconnect(){
         session_unset();
         ControllerProduits::readAll();
+    }
+
+    public static function validate(){
+        if ($_GET['nonce']==ModelClients::getClientByMail(htmlspecialchars($_GET['mail']))->getNonce()){
+            ModelClients::validate(htmlspecialchars($_GET['mail']));
+            ControllerClients::connect();
+        }else echo '<p>Lien de confirmation invalide</p>';
     }
 }
 ?>

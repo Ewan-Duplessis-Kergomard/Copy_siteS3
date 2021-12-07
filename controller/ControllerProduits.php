@@ -64,9 +64,18 @@ class ControllerProduits {
         ControllerProduits::read();
     }
     public static function add(){
-        if(array_key_exists($_GET['id_prod'],$_SESSION['panier'])){$_SESSION['panier'][$_GET['id_prod']]=$_SESSION['panier'][$_GET['id_prod']]+1;}
-        else{$_SESSION['panier'][$_GET['id_prod']]=1;}
-        ControllerProduits::readAll();
+        $stock = ModelProduits::getProduitById($_GET['id_prod'])->getStock();
+        if($stock===0 || (array_key_exists($_GET['id_prod'],$_SESSION['panier']) && $_SESSION['panier'][$_GET['id_prod']]==$stock)){
+            echo '<p class="warning">Stock insuffisant, le produit n\'a pas été ajouté au panier</p>';
+            ControllerProduits::read();
+        }else {
+            if (array_key_exists($_GET['id_prod'], $_SESSION['panier'])) {
+                $_SESSION['panier'][$_GET['id_prod']] = $_SESSION['panier'][$_GET['id_prod']] + 1;
+            } else {
+                $_SESSION['panier'][$_GET['id_prod']] = 1;
+            }
+            ControllerProduits::readAll();
+        }
     }
 
     public static function favori(){

@@ -17,8 +17,9 @@ class ModelClients {
     private $code_poste;
     private $rue;
     private $isAdmin;
+    private $nonce;
 
-    public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL)
+    public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL, $nonce=NULL)
     {
         if(!is_null($mail)&&!is_null($nom)&&!is_null($prenom)&&!is_null($ville)&&!is_null($code_poste)&&!is_null($rue)) {
             $this->mail = $mail;
@@ -29,6 +30,7 @@ class ModelClients {
             $this->rue = $rue;
         }
         if(!is_null($mdp)){$this->mdp = $mdp;}
+        if (!is_null($nonce)){$this->nonce=$nonce;}
     }
 
     public static function getAllClients(){
@@ -109,6 +111,16 @@ class ModelClients {
         return $this->isAdmin;
     }
 
+    public function getNonce()
+    {
+        return $this->nonce;
+    }
+
+    public function setNonce($nonce)
+    {
+        $this->nonce = $nonce;
+    }
+
     public function afficher(){
         echo "Client $this->prenom $this->nom, mail: $this->mail, adresse: $this->rue $this->code_poste $this->ville";
     }
@@ -125,9 +137,9 @@ class ModelClients {
     }
 
     public function save(){
-        $sql = "INSERT INTO p_clients (mail,mdp,nom,prenom,ville,code_poste,rue) VALUES (:mail,:mdp,:nom,:prenom,:ville,:code_poste,:rue)";
+        $sql = "INSERT INTO p_clients (mail,mdp,nom,prenom,ville,code_poste,rue,nonce) VALUES (:mail,:mdp,:nom,:prenom,:ville,:code_poste,:rue,:nonce)";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code_poste"=>$this->code_poste,"rue"=>$this->rue);
+        $values = array("mail"=>$this->mail,"mdp"=>$this->mdp,"nom"=>$this->nom,"prenom"=>$this->prenom,"ville"=>$this->ville,"code_poste"=>$this->code_poste,"rue"=>$this->rue,"nonce"=>$this->nonce);
         $req_prep->execute($values);
     }
 
@@ -184,6 +196,13 @@ class ModelClients {
         $values = array("mail"=>htmlspecialchars($mail),"id_prod"=>$idprod);
         $req_prep->execute($values);
         unset($_SESSION['favoris'][array_search($idprod,$_SESSION['favoris'])]);
+    }
+
+    public static function validate($mail){
+        $sql = "UPDATE p_clients SET nonce=NULL WHERE mail=:mail";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>htmlspecialchars($mail));
+        $req_prep->execute($values);
     }
 }
 
