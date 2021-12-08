@@ -85,5 +85,18 @@ class ControllerProduits {
         else{ModelClients::deleteFavori($_SESSION['login'],$_GET['id_prod']);}
         ControllerProduits::read();
     }
+
+    public static function checkStock(){
+        $panier2 = $_SESSION['panier'];
+        foreach ($_SESSION['panier'] as $key => $value){
+            $p=ModelProduits::getProduitById($key);
+            if ($p->getStock()<$value){
+                echo $p->getStock()." exemplaires du produit" .$p->getNomProd()." sont disponibles";
+                $panier2[$key]=$p->getStock();
+            }
+        }
+    return $panier2;
+
+    }
 }
 ?>

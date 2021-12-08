@@ -111,7 +111,18 @@ class ModelCommandes {
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("id_comm"=>$this->id_comm,"id_prod"=>$this->id_prod,"quantité"=>$this->quantité);
         $req_prep->execute($values);
-}
+    }
+
+    public static function newComm($mail){
+        $sql2 = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'duplessise' AND TABLE_NAME = 'p_comm_client'";
+        $req = Model::getPDO()->query($sql2);
+        $sql = "INSERT INTO p_comm_client (mail) VALUES (:mail)";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>$mail);
+        $req_prep->execute($values);
+        $req->setFetchMode(PDO::FETCH_COLUMN,0);
+        return $req->FetchAll();
+    }
 }
 ?>
 

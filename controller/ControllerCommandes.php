@@ -44,7 +44,7 @@ class ControllerCommandes {
 
     public static function created(){
         $commandes = new ModelCommandes($_GET['id_comm'],$_GET['id_prod'],$_GET['quantité']);
-        var_dump($commandes);
+        //var_dump($commandes);
         $commandes->save();
         //afficher confirmation de commandes
     }
@@ -82,6 +82,35 @@ class ControllerCommandes {
         $c->update();
         echo 'Votre commande a été mise à jour:<br>';
         ControllerCommandes::read();
+    }
+
+    public static function action(){
+        if ($_GET['use']=="add"){
+            if ($_SESSION['panier'][$_GET['id_prod']]+intval($_GET['val'])<=ModelProduits::getProduitById($_GET['id_prod'])->getStock()){
+                $_SESSION['panier'][$_GET['id_prod']]+=intval($_GET['val']);
+                if ($_SESSION['panier'][$_GET['id_prod']]==0){unset($_SESSION['panier'][$_GET['id_prod']]);}
+            }
+            else{
+                echo '<p class="warning">Stock insuffisant, le produit n\'a pas été ajouté au panier</p>';
+            }ControllerClients::panier();
+        }
+        if ($_GET['use']=="confirm"){
+            $id=ModelCommandes::newComm($_SESSION['login'])[0];
+            foreach ($_SESSION['panier'] as $key => $value){
+                $commandes = new ModelCommandes($id,$key,$value);
+                $commandes->save();
+            }
+            $_SESSION['panier']=array();
+            ControllerCommandes::confirmed($id);
+        }
+    }
+
+    public static function confirmed($id){
+        $id=$id;
+        $controller = 'commandes';
+        $view = 'confirm';
+        $pagetitle = 'Confirmation de commande';
+        require File::build_path(array("view","view.php"));
     }
 }
 ?>
