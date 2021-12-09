@@ -1,9 +1,9 @@
 <?php
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=espace_membre', 'root', '');
 
-if(isset($_GET['pseudo'], $_GET['key']) AND !empty($_GET['pseudo']) AND !empty($_GET['key'])) {
-    $pseudo = htmlspecialchars(urldecode($_GET['pseudo']));
-    $key = htmlspecialchars($_GET['key']);
+if(isset($_POST['pseudo'], $_POST['key']) AND !empty($_POST['pseudo']) AND !empty($_POST['key'])) {
+    $pseudo = htmlspecialchars(urldecode($_POST['pseudo']));
+    $key = htmlspecialchars($_POST['key']);
     $requser = $bdd->prepare("SELECT * FROM membres WHERE pseudo = ? AND confirmkey = ?");
     $requser->execute(array($pseudo, $key));
     $userexist = $requser->rowCount();

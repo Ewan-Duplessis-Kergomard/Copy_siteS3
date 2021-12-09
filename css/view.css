@@ -42,6 +42,16 @@ nav a{
     width: 10vw;
     min-width: 7em;
 }
+nav input[type=submit]{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    width: 10vw;
+    min-width: 7em;
+}
 
 .ico_panier{
     height: 50%;

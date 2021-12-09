@@ -16,24 +16,23 @@ echo " <header>
             <div class=\"navbar\">
                 <a href=\"index.php\">Accueil</a>";
                 if(isset($_SESSION['login'])){
-                    echo "<a href=\"?controller=clients&action=read&mail=".$_SESSION['login']."\">Profil</a>
-                    <a href=\"?controller=clients&action=disconnect\">Déconnexion</a>";//TODO gérer deconnexion
-                    if ($_SESSION['isAdmin']==1){echo "<a href=\"?controller=clients&action=readAll\">Panneau de contrôle</a>";}
+                    echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="read"><input type="hidden" name="mail" value='.$_SESSION['login'].'><input type="submit" value="Profil" /></form>
+                            <form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="disconnect"><input type="submit" value="Déconnexion" /></form>';
+                    if ($_SESSION['isAdmin']==1){echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="readAll"><input type="submit" value="Panneau de contrôle" /></form>';}
                 }
                 else{
-                    echo "<a href=\"?controller=clients&action=connect\">Connexion</a>
-                    <a href=\"?controller=clients&action=create\">Inscription</a>";
+                    echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="connect"><input type="submit" value="Cpnnexion" /></form>
+                        <form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="create"><input type="submit" value="Inscription" /></form>';
                 }
 
 // faire un count dans session panier pour chaque produit
 //echo $_SESSION['panier']['1']
-echo "<a href=\"view/contact/create.php\">Contact</a>
-        <a href=\"?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
-                    </div></nav></header>";
+echo '<a href="view/contact/create.php">Contact</a>
+<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="panier"><input type="submit" value="Panier" /></form>
+        <a href="?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
+                    </div></nav></header>';
 
 
-// Si $controleur='voiture' et $view='list',
-// alors $filepath="/chemin_du_site/view/voiture/list.php"
 if (!empty($controller)) {
     if (!empty($view)) {
         $filepath = File::build_path(array("view", $controller, "$view.php"));

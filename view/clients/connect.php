@@ -1,6 +1,6 @@
 <?php
 if (!empty($controller)) {
-    echo'<form method="get" action="index.php">
+    echo'<form method="post" action="index.php">
         <fieldset>
             <legend>Connexion:</legend>
             <p>

@@ -4,12 +4,12 @@
         require_once File::build_path(array("controller","ControllerClients.php"));
         require_once File::build_path(array("controller","ControllerCommandes.php"));
         // On recupère l'action passée dans l'URL
-         if (!isset($_GET['controller'])) {
+         if (!isset($_POST['controller'])) {
              $controller = 'produits';
-             } else $controller = $_GET['controller'];
-         if (!isset($_GET['action'])) {
+             } else $controller = $_POST['controller'];
+         if (!isset($_POST['action'])) {
             $action = 'readAll';
-             } else $action = $_GET['action'];
+             } else $action = $_POST['action'];
              $controller_class = 'Controller' . ucfirst($controller);
          if (!in_array($action, get_class_methods($controller_class))) {
             $view = 'error';

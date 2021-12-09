@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form method="get" action="index.php">
+<form method="post" action="index.php">
     <fieldset>
         <legend>Mon formulaire :</legend>
         <p>
