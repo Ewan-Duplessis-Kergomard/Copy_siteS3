@@ -157,13 +157,12 @@ class ModelClients {
         $req_prep->execute($values);
     }
 
-    //TODO
-    //complete w/ hash
-    /*public function updateMDPClient(){
+    public function updateMDPClient(){
         $sql = "UPDATE p_clients SET mdp=:mdp WHERE mail=:mail";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>$this->mail,"mdp"=>$this->mdp);
-    }*/
+        $req_prep->execute($values);
+    }
 
     public static function checkPswd($mail,$mdp){
         $sql = "SELECT * FROM p_clients WHERE mail=:mail AND mdp=:mdp";

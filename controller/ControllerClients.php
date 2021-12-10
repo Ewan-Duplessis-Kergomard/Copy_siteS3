@@ -80,18 +80,31 @@ class ControllerClients {
         $controller = 'clients';
         $view = 'updateMDP';
         $pagetitle = 'Changement mot de passe';
-        $c = ModelClients::getClientByMail($_POST['mail']);
+        $c = ModelClients::getClientByMail($_SESSION['login']);
         require File::build_path(array("view","view.php"));
     }
 
     public static function updated(){
-        $c = new ModelClients($_POST['mail'],NULL,$_POST['nom'],$_POST['prenom'],$_POST['ville'],$_POST['code'],$_POST['rue']);
-        $c->updateInfoClient();
-        echo 'Vos informations ont été mises à jour:<br>';//Email: '.$_POST['mail'].'<br>Nom: '.$_POST['nom'].' '.$_POST['prenom'].'<br>Adresse: '.$_POST['rue'].' '.$_POST['code'].' '.$_POST['ville'].'<br>';
-        ControllerClients::read();
+        if (isset($_POST['mail']) && isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['ville']) && isset($_POST['code']) && isset($_POST['rue'])){
+            if (filter_var(htmlspecialchars($_POST['mail']), FILTER_VALIDATE_EMAIL) && filter_var($_POST['code'],FILTER_VALIDATE_INT)){
+                $c = new ModelClients($_SESSION['login'],NULL,$_POST['nom'],$_POST['prenom'],$_POST['ville'],$_POST['code'],$_POST['rue']);
+                $c->updateInfoClient();
+                echo 'Vos informations ont été mises à jour:<br>';//Email: '.$_POST['mail'].'<br>Nom: '.$_POST['nom'].' '.$_POST['prenom'].'<br>Adresse: '.$_POST['rue'].' '.$_POST['code'].' '.$_POST['ville'].'<br>';
+                ControllerClients::read();
+            }
+        }
     }
-    //TODO
-    //public static function updatedMDP
+
+    public static function updatedMDP(){
+        $c =ModelClients::getClientByMail($_SESSION['login']);
+        if (isset($_POST['mdp']) && isset($_POST['mdp2']) && $_POST['mdp']===$_POST['mdp2']){
+            require_once File::build_path(array("lib","Security.php"));
+            $c->setMDP(Security::hacher($_POST['mdp']));
+            $c->updateMDPClient();
+            ControllerClients::read();
+        }
+
+    }
 
     public static function panier(){
         $controller='clients';
