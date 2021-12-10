@@ -54,10 +54,13 @@ class ControllerClients {
     }
 
     public static function delete(){
-        $controller = 'clients';
-        $view = 'delete';
-        $pagetitle = 'Suppression';
-        require File::build_path(array("view","view.php"));
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            $controller = 'clients';
+            $view = 'delete';
+            $pagetitle = 'Suppression';
+            require File::build_path(array("view", "view.php"));
+        }
     }
 
     public static function deleted(){

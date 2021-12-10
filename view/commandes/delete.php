@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form method="get" action="index.php">
+<!--<form method="get" action="index.php">
     <fieldset>
         <legend>Suppression de commande :</legend>
         <p>
@@ -17,6 +17,6 @@
             <input type="submit" value="Envoyer" />
         </p>
     </fieldset>
-</form>
+</form>-->
 </body>
 </html>

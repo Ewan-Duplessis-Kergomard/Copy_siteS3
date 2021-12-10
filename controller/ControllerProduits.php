@@ -24,44 +24,66 @@ class ControllerProduits {
     }
     //Inscription
     public static function create(){
-        $controller = 'produits';
-        $view='create';
-        $pagetitle="Ajout d'un produit";
-        require File::build_path(array("view","view.php"));
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            $controller = 'produits';
+            $view = 'create';
+            $pagetitle = "Ajout d'un produit";
+            require File::build_path(array("view", "view.php"));
+        }
     }
 
     public static function created(){
-        $prod = new ModelProduits(NULL,$_POST['nom_prod'],$_POST['stock'],$_POST['prix'],$_POST['description']);
-        $prod->save();
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            if ($_POST['nom_prod']!==""&&$_POST['stock']>=0&&$_POST['prix']>=0) {
+                $prod = new ModelProduits(NULL, $_POST['nom_prod'], $_POST['stock'], $_POST['prix'], $_POST['description']);
+                $prod->save();
+            }
+        }
 
     }
 
     public static function delete(){
-        $controller = 'produits';
-        $view = 'delete';
-        $pagetitle = 'Suppression de produit';
-        require File::build_path(array("view","view.php"));
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            $controller = 'produits';
+            $view = 'delete';
+            $pagetitle = 'Suppression de produit';
+            require File::build_path(array("view", "view.php"));
+        }
     }
 
     public static function deleted(){
-        ModelProduits::deleteById($_POST['id_prod']);
-        echo 'Produit n° '.$_POST['id_prod'].' supprimé.<br>';
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            ModelProduits::deleteById($_POST['id_prod']);
+            echo 'Produit n° ' . $_POST['id_prod'] . ' supprimé.<br>';
+        }
     }
 
     public static function updateInfo(){
-        $controller = 'produits';
-        $view = 'updateProduits';
-        $pagetitle = 'Modifications';
-        $c = ModelProduits::getProduitById($_POST['id_prod']);
-        require File::build_path(array("view","view.php"));
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            $controller = 'produits';
+            $view = 'updateProduits';
+            $pagetitle = 'Modifications';
+            $c = ModelProduits::getProduitById($_POST['id_prod']);
+            require File::build_path(array("view", "view.php"));
+        }
     }
 
 
     public static function updated(){
-        $c = new ModelProduits($_POST['id_prod'],$_POST['nom_prod'],$_POST['stock'],$_POST['prix'],$_POST['description']);
-        $c->updateInfoProduit();
-        echo 'Les informations du produit ont été mises à jour:<br>';
-        ControllerProduits::read();
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            if ($_POST['nom_prod']!==""&&$_POST['stock']>=0&&$_POST['prix']>=0) {
+                $c = new ModelProduits($_POST['id_prod'], $_POST['nom_prod'], $_POST['stock'], $_POST['prix'], $_POST['description']);
+                $c->updateInfoProduit();
+                echo 'Les informations du produit ont été mises à jour:<br>';
+                ControllerProduits::read();
+            }
+        }
     }
     public static function add(){
         $stock = ModelProduits::getProduitById($_POST['id_prod'])->getStock();

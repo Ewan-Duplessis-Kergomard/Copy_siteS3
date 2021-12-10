@@ -2,13 +2,13 @@
 require_once File::build_path(array("model","ModelCommandes.php")); // chargement du modèle
 class ControllerCommandes {
 
-    public static function readAll(){
+    /*public static function readAll(){
         $tab_c = ModelCommandes::getAllCommandes();
         $controller = 'commandes';
         $view = 'readAll';
         $pagetitle = 'Vos commandes';
         require File::build_path(array("view","view.php"));
-    }
+    }*/
 
     public static function read(){
         $c = ModelCommandes::getCommandesByid($_POST['id_comm']) ;
@@ -35,7 +35,7 @@ class ControllerCommandes {
         require File::build_path(array("view","view.php"));
     }
 
-    public static function create(){
+    /*public static function create(){
         $controller = 'commandes';
         $view='create';
         $pagetitle='Achat';
@@ -82,7 +82,7 @@ class ControllerCommandes {
         $c->update();
         echo 'Votre commande a été mise à jour:<br>';
         ControllerCommandes::read();
-    }
+    }*/
 
     public static function action(){
         if ($_POST['use']=="add"){
