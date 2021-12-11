@@ -39,7 +39,7 @@ class ControllerProduits {
             if ($_POST['nom_prod']!==""&&$_POST['stock']>=0&&$_POST['prix']>=0) {
                 $prod = new ModelProduits(NULL, $_POST['nom_prod'], $_POST['stock'], $_POST['prix'], $_POST['description']);
                 $prod->save();
-            }
+            }else ControllerProduits::create();
         }
 
     }
@@ -82,7 +82,7 @@ class ControllerProduits {
                 $c->updateInfoProduit();
                 echo 'Les informations du produit ont été mises à jour:<br>';
                 ControllerProduits::read();
-            }
+            }else ControllerProduits::updateInfo();
         }
     }
     public static function add(){
