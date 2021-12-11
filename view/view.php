@@ -21,7 +21,7 @@ echo " <header>
                     if ($_SESSION['isAdmin']==1){echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="readAll"><input type="submit" value="Panneau de contrôle" /></form>';}
                 }
                 else{
-                    echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="connect"><input type="submit" value="Cpnnexion" /></form>
+                    echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="connect"><input type="submit" value="Connexion" /></form>
                         <form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="create"><input type="submit" value="Inscription" /></form>';
                 }
 

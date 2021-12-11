@@ -9,7 +9,7 @@
 if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
 else {
     echo '
-<form method="get" action="index.php">
+<form method="post" action="index.php">
     <fieldset>
         <legend>Mon formulaire :</legend>
         <p>
