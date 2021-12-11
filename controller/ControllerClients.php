@@ -121,7 +121,6 @@ class ControllerClients {
     }
 
     public static function connected(){
-        var_dump($_POST);
         if(isset($_POST['mail']) && isset($_POST['mdp']) ){
             require_once File::build_path(array("lib","Security.php"));
             if(ModelClients::checkPswd($_POST['mail'],Security::hacher($_POST['mdp']))&& filter_var(htmlspecialchars($_POST['mail']), FILTER_VALIDATE_EMAIL) && ModelClients::getClientByMail($_POST['mail'])->getNonce()=="") {
@@ -150,7 +149,7 @@ class ControllerClients {
     }
 
     public static function validate(){
-        if ($_POST['nonce']==ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getNonce()){
+        if ($_GET['nonce']==ModelClients::getClientByMail(htmlspecialchars($_GET['mail']))->getNonce()){
             ModelClients::validate(htmlspecialchars($_POST['mail']));
             ControllerClients::connect();
         }else echo '<p>Lien de confirmation invalide</p>';
@@ -158,8 +157,16 @@ class ControllerClients {
 
     public static function permission(){
         $c = ModelClients::getClientByMail(htmlspecialchars($_POST['mail']));
-        $c->getIsAdmin()==0?$c->setIsAdmin(1):$c->setIsAdmin(0);
-        ModelClients::updateAdmin($_POST['mail']);
+        var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
+        if ($c->getIsAdmin()=='0'){
+            var_dump('1');
+            $c->setIsAdmin('1');
+            $c->updateAdmin();
+        }else $c->setIsAdmin('0');
+        //ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin()==0?ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->setIsAdmin(1):ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->setIsAdmin(0);
+        var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
+        $c->updateAdmin();
+        var_dump('2');
         ControllerClients::readAll();
     }
 }

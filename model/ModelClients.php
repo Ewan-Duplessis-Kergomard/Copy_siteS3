@@ -19,7 +19,7 @@ class ModelClients {
     private $isAdmin;
     private $nonce;
 
-    public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL, $nonce=NULL)
+    public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $ville=NULL, $code_poste=NULL, $rue=NULL, $nonce=NULL, $isAdmin=0)
     {
         if(!is_null($mail)&&!is_null($nom)&&!is_null($prenom)&&!is_null($ville)&&!is_null($code_poste)&&!is_null($rue)) {
             $this->mail = $mail;
@@ -28,6 +28,7 @@ class ModelClients {
             $this->ville = $ville;
             $this->code_poste = $code_poste;
             $this->rue = $rue;
+            $this->isAdmin = $isAdmin;
         }
         if(!is_null($mdp)){$this->mdp = $mdp;}
         if (!is_null($nonce)){$this->nonce=$nonce;}
@@ -109,6 +110,11 @@ class ModelClients {
     public function getIsAdmin()
     {
         return $this->isAdmin;
+    }
+
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
     }
 
     public function getNonce()
@@ -204,10 +210,10 @@ class ModelClients {
         $req_prep->execute($values);
     }
 
-    public static function updateAdmin($mail){
+    public  function updateAdmin(){
         $sql = "UPDATE p_clients SET isAdmin=:isAdmin WHERE mail=:mail";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail"=>$mail,"isAdmin"=>ModelClients::getClientByMail($mail)->getIsAdmin());
+        $values = array("mail"=>$this->getMail(),"isAdmin"=>$this->getIsAdmin());
         $req_prep->execute($values);
     }
 }
