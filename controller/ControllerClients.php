@@ -155,5 +155,12 @@ class ControllerClients {
             ControllerClients::connect();
         }else echo '<p>Lien de confirmation invalide</p>';
     }
+
+    public static function permission(){
+        $c = ModelClients::getClientByMail(htmlspecialchars($_POST['mail']));
+        $c->getIsAdmin()==0?$c->setIsAdmin(1):$c->setIsAdmin(0);
+        ModelClients::updateAdmin($_POST['mail']);
+        ControllerClients::readAll();
+    }
 }
 ?>

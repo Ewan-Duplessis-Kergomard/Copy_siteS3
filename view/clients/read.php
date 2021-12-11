@@ -2,7 +2,7 @@
 <?php
 echo '<h1>Votre Profil</h1>';
 if (isset($c)) {
-    echo '<p>Nom et Prénom: ' . htmlspecialchars($c->getNom()) . htmlspecialchars($c->getPrenom()) . '<br>Email: ' . htmlspecialchars($c->getMail()) . '<form method="post" action="index.php"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="updateInfoClient"><input type="submit" value="Modifier Profil"></form><form method="post" action="index.php"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="updateMDPClient"><input type="submit" value="Modifier MDP"></form></p>';
+    echo '<p>Nom et Prénom: ' . htmlspecialchars($c->getNom()) . htmlspecialchars($c->getPrenom()) . '<br>Email: ' . htmlspecialchars($c->getMail()) . '<form method="post" action="index.php"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="updateInfo"><input type="submit" value="Modifier Profil"></form><form method="post" action="index.php"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="updateMDP"><input type="submit" value="Modifier MDP"></form></p>';
 }
 echo '<p>Adresse: ' . $c->getRue() . ' ' . $c->getCodePoste() . ' ' . $c->getVille();
 echo '<div><h2>Vos Favoris</h2>';

@@ -203,6 +203,13 @@ class ModelClients {
         $values = array("mail"=>htmlspecialchars($mail));
         $req_prep->execute($values);
     }
+
+    public static function updateAdmin($mail){
+        $sql = "UPDATE p_clients SET isAdmin=:isAdmin WHERE mail=:mail";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail"=>$mail,"isAdmin"=>ModelClients::getClientByMail($mail)->getIsAdmin());
+        $req_prep->execute($values);
+    }
 }
 
 ?>
