@@ -169,5 +169,9 @@ class ControllerClients {
         var_dump('2');
         ControllerClients::readAll();
     }
+
+    public static function getComms(){
+        return ModelCommandes::getCommandesByMail($_SESSION['login']);
+    }
 }
 ?>

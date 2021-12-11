@@ -6,7 +6,6 @@ if (isset($c)) {
 }
 echo '<p>Adresse: ' . $c->getRue() . ' ' . $c->getCodePoste() . ' ' . $c->getVille();
 echo '<div><h2>Vos Favoris</h2>';
-var_dump($_SESSION['favoris']);
 if($_SESSION['favoris']!=array()) {
     foreach ($_SESSION['favoris'] as $value) {
         $prod = ModelProduits::getProduitById($value);
@@ -18,6 +17,19 @@ if($_SESSION['favoris']!=array()) {
     }
 }
 else echo '<p>Vous n\'avez aucun produit en favori</p>';
+echo '</div>';
+$commandes = ControllerClients::getComms();
+echo '<div><h2>Vos Commandes</h2>';
+if ($commandes!=array()){
+    foreach ($commandes as $idc => $prods){
+        echo '<div><p>Commande '.$idc.'</p><br>';
+        foreach ($prods as $idp => $qte){
+            echo ModelProduits::getProduitById($idp)->getNomProd().' '.$qte.'<br>';
+        }
+        echo '</div>';
+    }
+}
+else echo '<p>Vous n\'avez passé aucune commande<p>';
 echo '</div>';
 ?>
 </body>

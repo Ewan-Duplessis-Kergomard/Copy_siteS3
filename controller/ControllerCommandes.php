@@ -112,5 +112,7 @@ class ControllerCommandes {
         $pagetitle = 'Confirmation de commande';
         require File::build_path(array("view","view.php"));
     }
+
+
 }
 ?>
