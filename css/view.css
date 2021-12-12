@@ -47,10 +47,18 @@ nav input[type=submit]{
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    background-color: rgba(0,0,0,0.8);
     color: #fff;
     border: none;
     width: 10vw;
     min-width: 7em;
+    height: 100%;
+}
+
+#panier{
+    background: url("../images/Icone/panier.png") no-repeat center;
+    background-size: contain;
+    border: none;
 }
 
 .ico_panier{
@@ -82,6 +90,7 @@ main{
 
 .support{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     width:25%;
     min-width: 30em;

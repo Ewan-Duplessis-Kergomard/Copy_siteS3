@@ -64,15 +64,18 @@ class ControllerClients {
     }
 
     public static function deleted(){
-        ModelClients::deleteByMail($_POST['mail']);
-        echo 'Client '.$_POST['mail'].' supprimé.<br>';
+        if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin']==0){echo '<p class="warning">VOUS N\'AVEZ PAS L\'AUTORISATION D\'ACCEDER A CETTE PAGE !</p>';}
+        else {
+            ModelClients::deleteByMail($_POST['mail']);
+            echo 'Client ' . $_POST['mail'] . ' supprimé.<br>';
+        }
     }
 
     public static function updateInfo(){
         $controller = 'clients';
         $view = 'updateInfo';
         $pagetitle = 'Modifications';
-        $c = ModelClients::getClientByMail($_POST['mail']);
+        $c = ModelClients::getClientByMail($_SESSION['login']);
         require File::build_path(array("view","view.php"));
     }
 
@@ -130,7 +133,7 @@ class ControllerClients {
                 ControllerProduits::readAll();
             }else if (ModelClients::getClientByMail($_POST['mail'])->getNonce()!=""){
                 ControllerClients::connect();
-                var_dump(ModelClients::getClientByMail($_POST['mail'])->getNonce());
+                //var_dump(ModelClients::getClientByMail($_POST['mail'])->getNonce());
                 echo '<p class="warning">Veuillez valider votre adresse email</p>';
             }
             else{
@@ -157,21 +160,26 @@ class ControllerClients {
 
     public static function permission(){
         $c = ModelClients::getClientByMail(htmlspecialchars($_POST['mail']));
-        var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
+        //var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
         if ($c->getIsAdmin()=='0'){
-            var_dump('1');
             $c->setIsAdmin('1');
             $c->updateAdmin();
         }else $c->setIsAdmin('0');
         //ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin()==0?ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->setIsAdmin(1):ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->setIsAdmin(0);
-        var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
+        //var_dump(ModelClients::getClientByMail(htmlspecialchars($_POST['mail']))->getIsAdmin());
         $c->updateAdmin();
-        var_dump('2');
         ControllerClients::readAll();
     }
 
     public static function getComms(){
         return ModelCommandes::getCommandesByMail($_SESSION['login']);
+    }
+
+    public static function contact(){
+        $controller='clients';
+        $view='contact';
+        $pagetitle='Contact';
+        require File::build_path(array("view","view.php"));
     }
 }
 ?>

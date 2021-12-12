@@ -26,11 +26,8 @@ echo " <header>
                         <form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="create"><input type="submit" value="Inscription" /></form>';
                 }
 
-// faire un count dans session panier pour chaque produit
-//echo $_SESSION['panier']['1']
-echo '<a href="view/contact/create.php">Contact</a>
-<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="panier"><input type="submit" value="Panier" /></form>
-        <a href="?controller=clients&action=panier\"><img src=\"images/Icone/panier.png\" alt=\"panier.png\" class=\"ico_panier\"></a>
+echo '<form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="panier"><input id="panier" type="submit" value/></form>
+      <form method="post"><input type="hidden" name="controller" value="clients"><input type="hidden" name="action" value="contact"><input type="submit" value="Contact" /></form>
                     </div></nav></header>';
 
 

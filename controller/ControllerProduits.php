@@ -101,7 +101,7 @@ class ControllerProduits {
     }
 
     public static function favori(){
-        var_dump(array_search($_POST['id_prod'],$_SESSION['favoris']));
+        //var_dump(array_search($_POST['id_prod'],$_SESSION['favoris']));
         if(array_search($_POST['id_prod'],$_SESSION['favoris'])===false){ModelClients::addFavori($_SESSION['login'],$_POST['id_prod']);}
         //if(array_search($_POST['id_prod'],$_SESSION['favoris'])!=false)
         else{ModelClients::deleteFavori($_SESSION['login'],$_POST['id_prod']);}
