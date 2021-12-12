@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href=css/view.css>
         <link rel="stylesheet" type="text/css" href=css/detailProduit.css>
         <link rel="stylesheet" type="text/css" href=css/listeProduit.css>
+        <link rel="stylesheet" type="text/css" href=css/client.css>
         <title><?php if (!empty($pagetitle)) {
                 echo $pagetitle;
             } ?></title>

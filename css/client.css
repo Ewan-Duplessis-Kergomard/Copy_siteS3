@@ -1,0 +1,24 @@
+.panier{
+    display: flex;
+    flex-direction: column;
+}
+.item{
+    display: flex;
+    flex-direction: row;
+}
+.favoris{
+    display: flex;
+    flex-direction: column;
+}
+.favori{
+    display: flex;
+    flex-direction: row;
+}
+.commandes{
+    display: flex;
+    flex-direction: column;
+}
+.commande{
+    display: flex;
+    flex-direction: column;
+}
