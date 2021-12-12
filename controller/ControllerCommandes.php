@@ -8,7 +8,7 @@ class ControllerCommandes {
         $view = 'readAll';
         $pagetitle = 'Vos commandes';
         require File::build_path(array("view","view.php"));
-    }*/
+    }
 
     public static function read(){
         $c = ModelCommandes::getCommandesByid($_POST['id_comm']) ;
@@ -35,7 +35,7 @@ class ControllerCommandes {
         require File::build_path(array("view","view.php"));
     }
 
-    /*public static function create(){
+    public static function create(){
         $controller = 'commandes';
         $view='create';
         $pagetitle='Achat';
@@ -84,7 +84,7 @@ class ControllerCommandes {
         ControllerCommandes::read();
     }*/
 
-    public static function action(){
+    public static function action(){//Permet d'ajouter au panier une commande et de modifier la quantité, +/- si on arrive a 0 on supprime, si le sotck est insuffisant on le dit
         if ($_POST['use']=="add"){
             if ($_SESSION['panier'][$_POST['id_prod']]+intval($_POST['val'])<=ModelProduits::getProduitById($_POST['id_prod'])->getStock()){
                 $_SESSION['panier'][$_POST['id_prod']]+=intval($_POST['val']);
@@ -105,7 +105,7 @@ class ControllerCommandes {
         }
     }
 
-    public static function confirmed($id){
+    public static function confirmed($id){//Une fois que la commande est passé ca affiche au client que la commande est validé
         $id=$id;
         $controller = 'commandes';
         $view = 'confirm';

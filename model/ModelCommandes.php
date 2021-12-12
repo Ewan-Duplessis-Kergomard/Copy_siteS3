@@ -97,7 +97,7 @@ class ModelCommandes {
         $req_prep->execute($values);
     }
 
-    public static function newComm($mail){
+    public static function newComm($mail){//Ajoute une nouvelle commande avec auto incrémentatio de l'idcomm
         $sql2 = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'duplessise' AND TABLE_NAME = 'p_comm_client'";
         $req = Model::getPDO()->query($sql2);
         $sql = "INSERT INTO p_comm_client (mail) VALUES (:mail)";
@@ -108,7 +108,7 @@ class ModelCommandes {
         return $req->FetchAll();
     }
 
-    public static function getCommandesByMail($mail){
+    public static function getCommandesByMail($mail){//Historique des commandes, créer chaque tableau en fonction de l'idcomm
         $sql = "SELECT id_comm FROM p_comm_client WHERE mail=:mail";
         $req_prep = Model::getPDO()->prepare($sql);
         $values = array("mail"=>$mail);
@@ -121,7 +121,7 @@ class ModelCommandes {
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("id_comm"=>$item);
             $req_prep->execute($values);
-            $req_prep->setFetchMode(PDO::FETCH_KEY_PAIR);
+            $req_prep->setFetchMode(PDO::FETCH_KEY_PAIR);//Permet de recuperer la premiere colonne et se sert de ca comme index et range la quantité en fonction
             $tab2[$item] = $req_prep->FetchAll();
         }
         return $tab2;
